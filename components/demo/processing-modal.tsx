@@ -12,33 +12,33 @@ const agents: StatusEvent['agent'][] = ['Summary', 'ActionItems', 'Calendar', 'F
 type StatusMap = Record<StatusEvent['agent'], StatusEvent>
 
 export function ProcessingModal({
-  jobId,
-  statusStream,
-  open,
-  onOpenChangeAction,
-  onAbortAction,
+    jobId,
+    statusStream,
+    open,
+    onOpenChangeAction,
+    onAbortAction,
 }: {
-  jobId: string
-  statusStream: Observable<StatusEvent>
-  open: boolean
-  onOpenChangeAction: (open: boolean) => void
-  onAbortAction: () => void
+    jobId: string
+    statusStream: Observable<StatusEvent>
+    open: boolean
+    onOpenChangeAction: (open: boolean) => void
+    onAbortAction: () => void
 }) {
-  const [statuses, setStatuses] = useState<StatusMap>(() =>
+    const [statuses, setStatuses] = useState<StatusMap>(() =>
     agents.reduce((acc, agent) => {
-      acc[agent] = { agent, status: 'pending' }
-      return acc
-    }, {} as StatusMap),
-  )
+        acc[agent] = { agent, status: 'pending' }
+        return acc
+    }, {} as StatusMap)
+)
 
-  useEffect(() => {
+useEffect(() => {
     const sub: Subscription = statusStream.subscribe((event) => {
-      setStatuses((prev) => ({ ...prev, [event.agent]: event }))
+        setStatuses((prev) => ({ ...prev, [event.agent]: event }))
     })
     return () => sub.unsubscribe()
-  }, [statusStream])
+}, [statusStream])
 
-  function renderStatus(status: StatusEvent['status']) {
+function renderStatus(status: StatusEvent['status']) {
     if (status === 'running') return <Loader2 className="h-4 w-4 animate-spin text-amber-500" />
     if (status === 'done') return <CheckCircle2 className="h-4 w-4 text-emerald-500" />
     if (status === 'error') return <AlertTriangle className="h-4 w-4 text-rose-500" />
