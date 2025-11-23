@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Smart Meeting Follow-Up Machine
 
-## Getting Started
+Landing + demo experience for the multi-agent meeting assistant described in `AGENTS.MD`. Upload or paste a transcript, simulate orchestration (Summary, Action Items, Calendar, Follow-ups, Tracker), and explore the editable results UI.
 
-First, run the development server:
+## ✨ Feature Highlights
+
+- **Hero + Landing stack:** animated hero, sticky email capture, How It Works, integrations, pricing, and CTA footer.
+- **Demo flow (`/demo`):** Upload (file/paste/connect) → Speaker editor (search, redact, metadata) → Processing modal with live agent stream → Results tabs (summary, action items, decisions, timeline, follow-ups).
+- **Editable action items:** Sort/search/filter, inline edits, CSV export, Trello/calendar/reminder buttons, bulk actions, and confidence badges with rationale.
+- **Follow-up composer:** channel selector (email/Slack), template placeholders, preview panel, schedule send.
+- **Auth preview (`/auth/signup`):** Auth layout, OAuth buttons, password strength meter, terms checkbox, and demo CTA.
+- **Reusable primitives:** Buttons, cards, tabs, modal, skeleton, Empty/Error states, admin/integrations/analytics dashboards for future routes.
+
+## 🧱 Tech Stack
+
+- **Next.js 16 / App Router** with TypeScript
+- **Tailwind CSS v4 preview** styling & custom components
+- **Framer Motion, Radix UI, Lucide** for motion + accessibility
+- **React Hook Form + Zod** form validation
+- **TanStack Query + RxJS** to simulate orchestration streams
+- **Recharts** for analytics previews
+- **Sonner** for toasts
+
+## 🚀 Local Development
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# visit http://localhost:3000 and http://localhost:3000/demo
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Additional scripts:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `npm run lint` – ESLint (Next+TypeScript rules)
+- `npm run build` / `npm run start` – production build + serve
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🗺️ Key Routes
 
-## Learn More
+| Route | Purpose |
+| --- | --- |
+| `/` | Landing page with hero, email strip, process overview, pricing |
+| `/demo` | End-to-end transcript → agents → results flow |
+| `/auth/signup` | Auth layout + Sign-up form mock |
 
-To learn more about Next.js, take a look at the following resources:
+## 📦 Important Modules
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `components/landing/*` – marketing sections
+- `components/demo/*` – upload wizard, editor, modal, results, table, composer
+- `components/shared/states.tsx` – Empty/Error/Tooltip/Confirmation utilities
+- `components/auth/*` – Auth layout & form
+- `lib/types.ts`, `lib/mock-data.ts`, `lib/utils.ts` – shared contracts, sample data, helpers
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## ✅ Acceptance Checklist
 
-## Deploy on Vercel
+- Responsive layouts down to 360px
+- Keyboard-accessible buttons/inputs/tabs
+- Aria-live regions for form states and orchestration status
+- Sample data seeded from `lib/mock-data.ts`
+- Reusable UI primitives (buttons, cards, tabs, modal, checkbox, avatar, skeleton)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📚 Next Steps
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Wire real transcript ingestion + diarization backend
+- Persist meeting results + integrate with Trello/Asana APIs
+- Expand analytics, admin, and billing pages into full routes
+- Add Playwright / Vitest coverage for Upload → Process → Results flow
