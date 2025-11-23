@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils'
 export type Plan = {
   id: string
   name: string
-  price: string
+  price?: string
   features: string[]
   ctaText: string
   highlighted?: boolean
@@ -24,16 +24,21 @@ const defaultPlans: Plan[] = [
     id: 'team',
     name: 'Team',
     price: '$79',
-    features: ['Unlimited meetings', 'Action items + calendar pushes', 'Slack reminders'],
-    ctaText: 'Upgrade',
+    features: ['Unlimited meetings', 'Action items + calendar pushes', 'Slack + email nudges', 'Workspace roles & approvals'],
+    ctaText: 'Upgrade to Team',
     highlighted: true,
   },
   {
-    id: 'scale',
-    name: 'Scale',
-    price: 'Custom',
-    features: ['SOC2 & retention controls', 'Admin API & webhooks', 'Dedicated support'],
-    ctaText: 'Talk to sales',
+    id: 'enterprise',
+    name: 'Enterprise',
+    features: [
+      'Unlimited workspaces & seats',
+      'SAML/SCIM + advanced retention',
+      'Custom agent orchestration & human approvals',
+      'Dedicated CSM + white-glove onboarding',
+      'Private cloud & audit-ready exports',
+    ],
+    ctaText: 'Contact Sales',
   },
 ]
 
@@ -68,9 +73,11 @@ export function Pricing({ plans = defaultPlans }: { plans?: Plan[] }) {
             <h3 className="mt-4 text-2xl font-semibold" style={{ color: 'var(--color-heading)' }}>
               {plan.name}
             </h3>
-            <p className="mt-2 text-3xl font-bold" style={{ color: 'var(--color-heading)' }}>
-              {plan.price}
-            </p>
+            {plan.price && (
+              <p className="mt-2 text-3xl font-bold" style={{ color: 'var(--color-heading)' }}>
+                {plan.price}
+              </p>
+            )}
             <ul
               className={cn('mt-4 space-y-2 text-sm', plan.highlighted ? 'text-white/80' : 'text-gray-600')}
             >
@@ -87,8 +94,15 @@ export function Pricing({ plans = defaultPlans }: { plans?: Plan[] }) {
               ))}
             </ul>
             <Button
-              className={cn('mt-6 w-full', plan.highlighted ? 'bg-white text-ink-dark hover:bg-white/90' : '')}
-              variant={plan.highlighted ? 'secondary' : 'primary'}
+              className={cn(
+                'mt-6 w-full',
+                plan.highlighted
+                  ? 'bg-gradient-to-r from-[#5d5bff] via-[#65f6d4] to-[#1fb8ae] text-[#050616] hover:brightness-110'
+                  : plan.id === 'enterprise'
+                    ? 'border-white/40 text-white hover:bg-white/10'
+                    : ''
+              )}
+              variant={plan.highlighted ? 'primary' : 'secondary'}
             >
               {plan.ctaText}
             </Button>

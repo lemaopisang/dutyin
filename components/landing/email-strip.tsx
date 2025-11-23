@@ -6,6 +6,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { cn } from '@/lib/utils'
+import { X } from 'lucide-react'
 
 const schema = z.object({
   email: z.string().email('Enter a valid email'),
@@ -17,9 +19,18 @@ type FormValues = z.infer<typeof schema>
 type EmailStripProps = {
   placeholder?: string
   onSubmitAction: (email: string) => Promise<void>
+  variant?: 'inline' | 'floating'
+  onDismiss?: () => void
+  className?: string
 }
 
-export function EmailStrip({ placeholder = 'you@company.com', onSubmitAction }: EmailStripProps) {
+export function EmailStrip({
+  placeholder = 'you@company.com',
+  onSubmitAction,
+  variant = 'inline',
+  onDismiss,
+  className,
+}: EmailStripProps) {
   const {
     register,
     handleSubmit,
@@ -31,6 +42,7 @@ export function EmailStrip({ placeholder = 'you@company.com', onSubmitAction }: 
   })
 
   const [success, setSuccess] = useState(false)
+  const isFloating = variant === 'floating'
 
   const submit = handleSubmit(async (values) => {
     await onSubmitAction(values.email)
@@ -40,7 +52,25 @@ export function EmailStrip({ placeholder = 'you@company.com', onSubmitAction }: 
   })
 
   return (
-    <section className="sticky bottom-6 z-20 mx-auto max-w-4xl rounded-3xl border border-white/15 bg-[rgba(5,8,20,0.92)] p-6 text-slate-100 shadow-[0_20px_80px_rgba(0,0,0,0.45)] backdrop-blur">
+    <section
+      className={cn(
+        'relative rounded-3xl border border-white/15 bg-[rgba(5,8,20,0.95)] p-6 text-slate-100 shadow-[0_20px_80px_rgba(0,0,0,0.45)] backdrop-blur',
+        isFloating
+          ? 'pointer-events-auto mx-auto w-full max-w-4xl'
+          : 'sticky bottom-6 z-20 mx-auto max-w-4xl',
+        className,
+      )}
+    >
+      {onDismiss && (
+        <button
+          type="button"
+          aria-label="Dismiss early access form"
+          onClick={onDismiss}
+          className="absolute right-4 top-4 rounded-full border border-white/10 bg-white/5 p-1 text-slate-200 transition hover:bg-white/10"
+        >
+          <X className="h-4 w-4" />
+        </button>
+      )}
       {success ? (
         <p className="text-center text-sm font-medium text-slate-100" role="status">
           Check your inbox — demo access link sent.

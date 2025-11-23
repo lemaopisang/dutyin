@@ -19,8 +19,8 @@ export function Navbar() {
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-[rgba(4,7,18,0.9)] text-slate-100 shadow-lg backdrop-blur-xl">
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4 md:py-5">
-        <Link href="/" aria-label="Dutyin home">
-          <Image src="/DutyIn_logo.webp" alt="Dutyin" width={40} height={40} priority />
+        <Link href="/" aria-label="Dutyin home" className="inline-flex items-center">
+          <Image src="/DutyIn_logo.webp" alt="Dutyin" width={128} height={128} priority className="h-10 w-36 object-contain" />
         </Link>
         <nav className={cn('hidden items-center gap-8 text-sm text-slate-300 md:flex')}>
           {links.map((link) => (

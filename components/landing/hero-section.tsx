@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { ColorBandBackground } from "@/components/landing/color-band-background";
 
 const defaultProps = {
     title: "Dutyin turns every meeting into compact action.",
@@ -108,16 +109,7 @@ export function HeroSection({
                 boxShadow: "0 40px 120px rgba(5,6,22,0.65)",
             }}
         >
-            <div className="absolute inset-0 opacity-40">
-                <div
-                    className="absolute -left-20 top-12 h-64 w-64 rounded-full blur-[140px]"
-                    style={{ background: "rgba(32,213,194,0.45)" }}
-                />
-                <div
-                    className="absolute bottom-0 right-0 h-72 w-72 rounded-full blur-[160px]"
-                    style={{ background: "rgba(108,99,255,0.45)" }}
-                />
-            </div>
+            <ColorBandBackground variant="hero" />
             <div className="relative z-10 grid gap-16 md:grid-cols-2 md:items-center">
                 <motion.div
                     initial={{ opacity: 0, y: 28 }}

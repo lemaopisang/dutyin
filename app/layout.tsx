@@ -5,6 +5,7 @@ import { QueryProvider } from '@/components/providers/query-provider'
 import { ToasterProvider } from '@/components/providers/toaster-provider'
 import { Navbar } from '@/components/layout/navbar'
 import { Footer } from '@/components/layout/footer'
+import { EmailStripContainer } from '@/components/landing/email-strip-container'
 import './globals.css'
 
 const font = Plus_Jakarta_Sans({ subsets: ['latin'], display: 'swap' })
@@ -28,6 +29,7 @@ export default function RootLayout({
             {children}
           </main>
           <Footer />
+          <EmailStripContainer />
           <ToasterProvider />
         </QueryProvider>
       </body>

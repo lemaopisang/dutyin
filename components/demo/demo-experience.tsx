@@ -21,22 +21,22 @@ const agentSteps = [
 const PROCESSING_DURATION_MS = agentSteps.length * 1000 + 1600
 
 function cloneMeetingResults(data: MeetingResultsType): MeetingResultsType {
-  return {
+    return {
     ...data,
     actionItems: data.actionItems.map((item) => ({ ...item })),
     decisions: data.decisions.map((decision) => ({ ...decision, participants: [...decision.participants] })),
     timeline: data.timeline.map((event) => ({ ...event })),
     followUps: data.followUps.map((follow) => ({ ...follow })),
-  }
+    }
 }
 
 function createStatusStream(): Observable<StatusEvent> {
-  return new Observable((subscriber) => {
-    const timers: ReturnType<typeof setTimeout>[] = []
+    return new Observable((subscriber) => {
+        const timers: ReturnType<typeof setTimeout>[] = []
 
     agentSteps.forEach((step, index) => {
-      const startTimer = setTimeout(() => {
-        const running: StatusEvent = { ...step, status: 'running' }
+        const startTimer = setTimeout(() => {
+            const running: StatusEvent = { ...step, status: 'running' }
         subscriber.next(running)
         const doneTimer = setTimeout(() => {
           subscriber.next({ ...running, status: 'done', message: 'Completed' })
